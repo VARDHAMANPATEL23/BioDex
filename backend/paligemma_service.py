@@ -5,6 +5,8 @@ and object bounding box detection.
 """
 import io
 import os
+from dotenv import load_dotenv
+load_dotenv()
 import re
 import time
 import base64
@@ -14,10 +16,9 @@ from concurrent.futures import ThreadPoolExecutor
 
 from biology_engine import get_species_profile
 
-API_KEY = os.environ.get(
-    "NVIDIA_API_KEY",
-    "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"
-)
+API_KEY = os.environ.get("NVIDIA_API_KEY")
+if not API_KEY:
+    print("WARNING: NVIDIA_API_KEY not found in environment!")
 PALIGEMMA_URL = "https://ai.api.nvidia.com/v1/vlm/google/paligemma"
 
 HEADERS_PALIGEMMA = {

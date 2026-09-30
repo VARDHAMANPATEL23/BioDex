@@ -4,14 +4,15 @@ Provides detailed scientific information, ecology, habitat, survival environment
 taxonomy, diet, behavior, and conservation status for living organisms.
 """
 import os
+from dotenv import load_dotenv
+load_dotenv()
 import re
 import json
 import requests
 
-API_KEY = os.environ.get(
-    "NVIDIA_API_KEY",
-    "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"
-)
+API_KEY = os.environ.get("NVIDIA_API_KEY")
+if not API_KEY:
+    print("WARNING: NVIDIA_API_KEY not found in environment!")
 LLM_URL = "https://integrate.api.nvidia.com/v1/chat/completions"
 
 HEADERS_LLM = {
