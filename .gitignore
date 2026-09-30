@@ -1,0 +1,23 @@
+# Environments
+backend/venv/
+backend/.env
+.env
+.venv
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# IDEs
+.vscode/
+.idea/
+
+# Logs
+.logs/
+*.log
+
+# Temp files
+*.bak
+*.tmp
