@@ -7,5 +7,5 @@ requests
 python-multipart
 python-dotenv
 pymongo[srv]
-passlib[bcrypt]
+bcrypt
 PyJWT
