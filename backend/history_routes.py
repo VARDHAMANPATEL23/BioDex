@@ -43,12 +43,18 @@ def save_scan(record: ScanRecord, email: str = Depends(get_current_user)):
         "prediction": prediction_data,
         "timestamp": datetime.utcnow().isoformat()
     }
-    result = history_collection.insert_one(history_item)
-    return {"status": "success", "id": str(result.inserted_id)}
+    try:
+        result = history_collection.insert_one(history_item)
+        return {"status": "success", "id": str(result.inserted_id)}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("")
 def get_history(email: str = Depends(get_current_user)):
-    records = list(history_collection.find({"email": email}).sort("timestamp", -1))
+    try:
+        records = list(history_collection.find({"email": email}).sort("timestamp", -1))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
     for r in records:
         r["_id"] = str(r["_id"])
     return {"status": "success", "data": records}

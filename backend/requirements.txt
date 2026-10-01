@@ -6,6 +6,6 @@ numpy
 requests
 python-multipart
 python-dotenv
-pymongo
+pymongo[srv]
 passlib[bcrypt]
 PyJWT
