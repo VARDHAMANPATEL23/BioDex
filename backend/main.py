@@ -32,8 +32,14 @@ async def predict_upload(file: UploadFile = File(...)):
 
 @app.post("/predict/url")
 async def predict_url(req: URLRequest):
-    r = requests.get(req.url, timeout=10, headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"})
-    return _build_response(r.content, req.url)
+    try:
+        r = requests.get(req.url, timeout=10, headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"})
+        r.raise_for_status()
+        return _build_response(r.content, req.url)
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return {"status": "error", "message": f"Failed to download image from URL: {str(e)}"}
     
 def string_to_seed(s: str) -> int:
     return int(hashlib.md5(s.encode('utf-8')).hexdigest(), 16) % (10**8)

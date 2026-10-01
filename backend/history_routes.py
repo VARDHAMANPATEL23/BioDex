@@ -23,7 +23,7 @@ def get_current_user(authorization: str = Header(None)):
     except:
         raise HTTPException(status_code=401, detail="Invalid token")
 
-@router.post("/")
+@router.post("")
 def save_scan(record: ScanRecord, email: str = Depends(get_current_user)):
     # 1. Clean the payload: If image_uri is a massive base64 string or local file path, delete it.
     # We only want to save small URLs to prevent MongoDB bloat.
@@ -46,7 +46,7 @@ def save_scan(record: ScanRecord, email: str = Depends(get_current_user)):
     result = history_collection.insert_one(history_item)
     return {"status": "success", "id": str(result.inserted_id)}
 
-@router.get("/")
+@router.get("")
 def get_history(email: str = Depends(get_current_user)):
     records = list(history_collection.find({"email": email}).sort("timestamp", -1))
     for r in records:

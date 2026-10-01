@@ -101,7 +101,7 @@ export default function BioDexApp() {
 				setActiveTab("scan");
 			}
 		} catch (err: any) {
-			setAuthMsg(err.response?.data?.detail || "Authentication Failed.");
+			setAuthMsg(err.response?.data?.detail || err.message || "Authentication Failed. Ensure Backend and Database are Online.");
 		}
 	};
 
